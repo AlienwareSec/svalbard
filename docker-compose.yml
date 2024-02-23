@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db:
+    container_name: svalbard_db 
+    image: mariadb:latest
+    ports: 
+      - 3306:3306  
+    environment: 
+      MARIADB_ROOT_PASSWORD: password
+    volumes:
+      - sb_database:/var/lib/mysql
+
+  vault:
+    container_name: svalbard
+    image: pawangambhir/svalbard:1.0
+    tty: true
+    depends_on:
+      - db
+
+volumes:
+  sb_database:
